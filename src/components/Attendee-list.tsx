@@ -6,10 +6,12 @@ import {
   ChevronRight,
   ChevronsRight,
 } from "lucide-react";
+
 import { IconButton } from "./Icon-button";
 import { Table } from "./table/Table";
 import { TableHeader } from "./table/Table-header";
 import { TableCell } from "./table/Table-cell";
+import { TableRow } from "./table/Table-row";
 
 export function AttendeeList() {
   return (
@@ -45,7 +47,10 @@ export function AttendeeList() {
         <tbody>
           {Array.from({ length: 5 }).map((_, i) => {
             return (
-              <tr key={i} className="border-b border-white/10 hover:bg-white/5">
+              <TableRow
+                key={i}
+                className="border-b border-white/10 hover:bg-white/5"
+              >
                 <TableCell>
                   <input
                     type="checkbox"
@@ -70,7 +75,7 @@ export function AttendeeList() {
                     <MoreHorizontal className="size-4" />
                   </IconButton>
                 </TableCell>
-              </tr>
+              </TableRow>
             );
           })}
         </tbody>
