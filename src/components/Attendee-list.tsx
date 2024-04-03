@@ -7,13 +7,30 @@ import {
   ChevronsRight,
 } from "lucide-react";
 
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import relativeTime from "dayjs/plugin/relativeTime";
+
 import { IconButton } from "./Icon-button";
 import { Table } from "./table/Table";
 import { TableHeader } from "./table/Table-header";
 import { TableCell } from "./table/Table-cell";
 import { TableRow } from "./table/Table-row";
+import { useState } from "react";
+import { attendees } from "../data/attendees";
+
+dayjs.extend(relativeTime);
+dayjs.locale("pt-br");
 
 export function AttendeeList() {
+  const [search, setSearch] = useState("");
+
+  function onSearchInputChanged(
+    event: React.ChangeEventHandler<HTMLInputElement>
+  ) {
+    setSearch(event.target.value);
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-3 items-center">
@@ -21,11 +38,13 @@ export function AttendeeList() {
         <div className="px-3 w-72 py-1.5 border border-white/10  rounded-lg text-sm flex items-center gap-3">
           <Search className="size-4 text-emerald-300" />
           <input
+            onChange={onSearchInputChanged}
             className="bg-transparent flex-1 outline-none border-0 p-0 text-sm"
             placeholder="Buscar participantes"
           />
         </div>
       </div>
+      {search}
 
       <Table>
         <thead>
@@ -45,10 +64,10 @@ export function AttendeeList() {
         </thead>
 
         <tbody>
-          {Array.from({ length: 5 }).map((_, i) => {
+          {attendees.map((attendee) => {
             return (
               <TableRow
-                key={i}
+                key={attendee.id}
                 className="border-b border-white/10 hover:bg-white/5"
               >
                 <TableCell>
@@ -57,19 +76,19 @@ export function AttendeeList() {
                     className="size-4 bg-black/20 rounded border-white/10 "
                   />
                 </TableCell>
-                <TableCell>52716</TableCell>
+                <TableCell> {attendee.id} </TableCell>
                 <TableCell>
                   <div className="flex flex-col gap-1">
                     <span className="font-semibold text-white">
-                      Diego Schell Fernandes
+                      {attendee.name}
                     </span>
                     <span className="text-xs text-white/50">
-                      diego.schell.f@gmail.com
+                      {attendee.email}
                     </span>
                   </div>
                 </TableCell>
-                <TableCell>7 days ago</TableCell>
-                <TableCell>3 days ago</TableCell>
+                <TableCell>{dayjs().to(attendee.createdAt)}</TableCell>
+                <TableCell>{dayjs().to(attendee.createdInAt)}</TableCell>
                 <TableCell>
                   <IconButton transparent>
                     <MoreHorizontal className="size-4" />
