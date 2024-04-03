@@ -54,7 +54,7 @@ export function AttendeeList() {
           </thead>
 
           <tbody>
-            {Array.from({ length: 9 }).map((_, i) => {
+            {Array.from({ length: 5 }).map((_, i) => {
               return (
                 <tr
                   key={i}
@@ -72,7 +72,9 @@ export function AttendeeList() {
                       <span className="font-semibold text-white">
                         Diego Schell Fernandes
                       </span>
-                      <span className="text-xs">diego.schell.f@gmail.com</span>
+                      <span className="text-xs text-white/50">
+                        diego.schell.f@gmail.com
+                      </span>
                     </div>
                   </td>
                   <td className="py-3 px-4 text-sm text-zinc-300">
