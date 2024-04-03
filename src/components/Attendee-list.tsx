@@ -7,6 +7,7 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import { IconButton } from "./Icon-button";
+import { Table } from "./table/Table";
 
 export function AttendeeList() {
   return (
@@ -22,112 +23,103 @@ export function AttendeeList() {
         </div>
       </div>
 
-      <div className="border border-white/10 rounded-lg">
-        <table className="w-full ">
-          <thead>
-            <tr className="border-b border-white/10">
-              <th
-                style={{ width: 48 }}
-                className="py-3 px-4 text-sm font-semibold text-left"
-              >
-                <input
-                  type="checkbox"
-                  className="size-4 bg-black/20 rounded border-white/10 "
-                />
-              </th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">
-                Código
-              </th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">
-                Participante
-              </th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">
-                Data de inscrição
-              </th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">
-                Data do check-in
-              </th>
-              <th
-                style={{ width: 64 }}
-                className="py-3 px-4 text-sm font-semibold text-left"
-              ></th>
-            </tr>
-          </thead>
+      <Table>
+        <thead>
+          <tr className="border-b border-white/10">
+            <th
+              style={{ width: 48 }}
+              className="py-3 px-4 text-sm font-semibold text-left"
+            >
+              <input
+                type="checkbox"
+                className="size-4 bg-black/20 rounded border-white/10 "
+              />
+            </th>
+            <th className="py-3 px-4 text-sm font-semibold text-left">
+              Código
+            </th>
+            <th className="py-3 px-4 text-sm font-semibold text-left">
+              Participante
+            </th>
+            <th className="py-3 px-4 text-sm font-semibold text-left">
+              Data de inscrição
+            </th>
+            <th className="py-3 px-4 text-sm font-semibold text-left">
+              Data do check-in
+            </th>
+            <th
+              style={{ width: 64 }}
+              className="py-3 px-4 text-sm font-semibold text-left"
+            ></th>
+          </tr>
+        </thead>
 
-          <tbody>
-            {Array.from({ length: 5 }).map((_, i) => {
-              return (
-                <tr
-                  key={i}
-                  className="border-b border-white/10 hover:bg-white/5"
-                >
-                  <td className="py-3 px-4 text-sm text-zinc-300">
-                    <input
-                      type="checkbox"
-                      className="size-4 bg-black/20 rounded border-white/10 "
-                    />
-                  </td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">52716</td>
-                  <td>
-                    <div className="flex flex-col gap-1">
-                      <span className="font-semibold text-white">
-                        Diego Schell Fernandes
-                      </span>
-                      <span className="text-xs text-white/50">
-                        diego.schell.f@gmail.com
-                      </span>
-                    </div>
-                  </td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">
-                    7 days ago
-                  </td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">
-                    3 days ago
-                  </td>
-                  <td className="py-3 px-4 text-sm text-zinc-300">
-                    <IconButton transparent>
-                      <MoreHorizontal className="size-4" />
-                    </IconButton>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-          <tfoot>
-            <tr>
-              <td className="py-3 px-4 text-sm text-zinc-300" colSpan={3}>
-                Showing 10 of 228 items
-              </td>
-              <td
-                className="py-3 px-4 text-sm text-zinc-300 text-right"
-                colSpan={3}
-              >
-                <div className="inline-flex items-center gap-8">
-                  <span>Pagina 1 de 23</span>
-
-                  <div className="flex gap-1.5">
-                    <IconButton>
-                      <ChevronsLeft className="size-4" />
-                    </IconButton>
-
-                    <IconButton>
-                      <ChevronLeft className="size-4" />
-                    </IconButton>
-
-                    <IconButton>
-                      <ChevronRight className="size-4" />
-                    </IconButton>
-
-                    <IconButton>
-                      <ChevronsRight className="size-4" />
-                    </IconButton>
+        <tbody>
+          {Array.from({ length: 5 }).map((_, i) => {
+            return (
+              <tr key={i} className="border-b border-white/10 hover:bg-white/5">
+                <td className="py-3 px-4 text-sm text-zinc-300">
+                  <input
+                    type="checkbox"
+                    className="size-4 bg-black/20 rounded border-white/10 "
+                  />
+                </td>
+                <td className="py-3 px-4 text-sm text-zinc-300">52716</td>
+                <td>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-white">
+                      Diego Schell Fernandes
+                    </span>
+                    <span className="text-xs text-white/50">
+                      diego.schell.f@gmail.com
+                    </span>
                   </div>
+                </td>
+                <td className="py-3 px-4 text-sm text-zinc-300">7 days ago</td>
+                <td className="py-3 px-4 text-sm text-zinc-300">3 days ago</td>
+                <td className="py-3 px-4 text-sm text-zinc-300">
+                  <IconButton transparent>
+                    <MoreHorizontal className="size-4" />
+                  </IconButton>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td className="py-3 px-4 text-sm text-zinc-300" colSpan={3}>
+              Showing 10 of 228 items
+            </td>
+            <td
+              className="py-3 px-4 text-sm text-zinc-300 text-right"
+              colSpan={3}
+            >
+              <div className="inline-flex items-center gap-8">
+                <span>Pagina 1 de 23</span>
+
+                <div className="flex gap-1.5">
+                  <IconButton>
+                    <ChevronsLeft className="size-4" />
+                  </IconButton>
+
+                  <IconButton>
+                    <ChevronLeft className="size-4" />
+                  </IconButton>
+
+                  <IconButton>
+                    <ChevronRight className="size-4" />
+                  </IconButton>
+
+                  <IconButton>
+                    <ChevronsRight className="size-4" />
+                  </IconButton>
                 </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </Table>
     </div>
   );
 }
