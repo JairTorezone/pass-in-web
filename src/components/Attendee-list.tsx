@@ -26,17 +26,75 @@ interface attendee {
   name: string;
   email: string;
   createdAt: string;
-  createdInAt: string | null;
+  checkedInAt: string | null;
 }
 
 export function AttendeeList() {
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState(() => {
+    const url = new URL(window.location.toString());
+
+    if (url.searchParams.has("search")) {
+      return url.searchParams.get("search") ?? "";
+    }
+
+    return "";
+  });
+
+  const [page, setPage] = useState(() => {
+    const url = new URL(window.location.toString());
+
+    if (url.searchParams.has("page")) {
+      return Number(url.searchParams.get("page"));
+    }
+
+    return 1;
+  });
 
   const [total, setTotal] = useState(0);
   const [attendees, setAttendees] = useState<attendee[]>([]);
 
   const totalPages = Math.ceil(total / 10);
+
+  function setCurrentSearch(search: string) {
+    const url = new URL(window.location.toString());
+
+    url.searchParams.set("search", search);
+
+    window.history.pushState({}, "", url);
+
+    setSearch(search);
+  }
+
+  function setCurrentPage(page: number) {
+    const url = new URL(window.location.toString());
+
+    url.searchParams.set("page", String(page));
+
+    window.history.pushState({}, "", url);
+
+    setPage(page);
+  }
+
+  function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
+    setCurrentSearch(event.target.value);
+    setCurrentPage(1);
+  }
+
+  function goToFirsPage() {
+    setCurrentPage(1);
+  }
+
+  function goToLastPage() {
+    setCurrentPage(totalPages);
+  }
+
+  function goToNextPage() {
+    setCurrentPage(page + 1);
+  }
+
+  function goToPreviousPage() {
+    setCurrentPage(page - 1);
+  }
 
   useEffect(() => {
     const url = new URL(
@@ -57,27 +115,6 @@ export function AttendeeList() {
       });
   }, [page, search]);
 
-  function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
-    setSearch(event.target.value);
-    setPage(1);
-  }
-
-  function goToFirsPage() {
-    setPage(1);
-  }
-
-  function goToLastPage() {
-    setPage(totalPages);
-  }
-
-  function goToNextPage() {
-    return setPage(page + 1);
-  }
-
-  function goToPreviousPage() {
-    return setPage(page - 1);
-  }
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex gap-3 items-center">
@@ -86,6 +123,7 @@ export function AttendeeList() {
           <Search className="size-4 text-emerald-300" />
           <input
             onChange={onSearchInputChanged}
+            value={search}
             className="bg-transparent flex-1 outline-none border-0 p-0 text-sm focus:ring-0"
             placeholder="Buscar participantes"
           />
@@ -135,10 +173,10 @@ export function AttendeeList() {
                 </TableCell>
                 <TableCell>{dayjs().to(attendee.createdAt)}</TableCell>
                 <TableCell>
-                  {attendee.createdInAt === null ? (
-                    <span className="text-zinc-500"> "Não fez check-in"</span>
+                  {attendee.checkedInAt === null ? (
+                    <span className="text-zinc-400"> "Não fez check-in"</span>
                   ) : (
-                    dayjs().to(attendee.createdInAt)
+                    dayjs().to(attendee.checkedInAt)
                   )}
                 </TableCell>
                 <TableCell>
